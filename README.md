@@ -180,17 +180,17 @@ P-001   콜라 500ml      1500   10   음료
   * category
 
 ## 기능 목록(모델 기능)
-* registerProduct
-* adjustProduct
-* removeProduct
-* storageProduct
-* deliveryProduct
-* listProduct
-* searchProduct
-* statisticProduct
+* register
+* edit
+* remove
+* add
+* substitute
+* list
+* find
+* stat
 
 ### 뷰 기능 목록
-* printMenu
+* printMenuAndInputChoice
 * register
 * edit
 * delete
