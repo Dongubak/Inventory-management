@@ -56,6 +56,10 @@ class View {
   async wrongInput() {
     await print('잘못된 입력입니다.');
   }
+
+  async successMsg(msg) {
+    await printLines([msg, '']);
+  }
 }
 
 export default View;

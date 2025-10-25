@@ -49,6 +49,8 @@ class AppController {
   async create() {
     const product = await this.view.register();
     this.inventory.register(new Product(product));
+    const msg = `→ 등록 성공: ${product.id} (${product.name})`;
+    await this.view.successMsg(msg);
   }
 
   async edit() {}
