@@ -19,7 +19,6 @@ class AppController {
         await this.route(choice);
       } catch (e) {
         console.log(e);
-        break;
       }
     }
   }
@@ -53,7 +52,30 @@ class AppController {
     await this.view.successMsg(msg);
   }
 
-  async edit() {}
+  async edit() {
+    const id = await this.preEdit();
+    const product = await this.postEdit(id);
+    this.inventory.edit(product);
+    const msg = `→ 수정 성공: ${product.id} (${product.name})`;
+    await this.view.successMsg(msg);
+  }
+
+  async preEdit() {
+    const id = await this.view.preEdit();
+    if (!this.inventory.findById(id)) throw new Error();
+    return id;
+  }
+
+  async postEdit(id) {
+    const product = this.inventory.findById(id);
+    const msg = `아이디 확인 완료: ${product.id} (${product.name})`;
+    const editProduct = await this.view.postEdit(msg);
+    return {
+      ...editProduct,
+      id,
+    };
+  }
+
   async delete() {}
   async receive() {}
   async shipping() {}

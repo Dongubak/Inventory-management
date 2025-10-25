@@ -1,11 +1,18 @@
-import { ask, close, print, printLines } from '../../module/inputOutput.js';
 import {
-  validateId,
-  validCategory,
-  validName,
-  validPrice,
-  validQuantity,
-} from '../../module/validation.js';
+  isValidCategoryForCreate,
+  isValidIdForCreate,
+  isValidNameForCreate,
+  isValidPriceForCreate,
+  isValidQuantityForCreate,
+} from '../../module/create/validationForCreate.js';
+import {
+  isValidCategoryForEdit,
+  isValidIdForEdit,
+  isValidNameForEdit,
+  isValidPriceForEdit,
+  isValidQuantityForEdit,
+} from '../../module/edit/validationForEdit.js';
+import { ask, close, print, printLines } from '../../module/inputOutput.js';
 
 class View {
   constructor() {}
@@ -30,26 +37,58 @@ class View {
     print('[1] 상품 등록');
 
     const id = await ask('ID: ');
-    if (!validateId(id)) throw new Error();
+    if (!isValidIdForCreate(id)) throw new Error();
 
     const name = await ask('이름: ');
-    if (!validateId(name)) throw new Error();
+    if (!isValidNameForCreate(name)) throw new Error();
 
     const price = await ask('가격(원): ');
-    if (!validPrice(price)) throw new Error();
+    if (!isValidPriceForCreate(price)) throw new Error();
 
     const quantity = await ask('수량: ');
-    if (!validQuantity(quantity)) throw new Error();
+    if (!isValidQuantityForCreate(quantity)) throw new Error();
 
     const category = await ask('카테고리 : ');
-    if (!validCategory(category)) throw new Error();
+    if (!isValidCategoryForCreate(category)) throw new Error();
 
     return {
       id,
       name,
-      price,
-      quantity,
       category,
+      price: +price,
+      quantity: +quantity,
+    };
+  }
+
+  async preEdit() {
+    await print('[2] 상품 수정');
+
+    const id = await ask('ID: ');
+    if (!isValidIdForCreate(id)) throw new Error();
+
+    return id;
+  }
+
+  async postEdit(msg) {
+    await print(msg);
+
+    const name = await ask('이름 (Enter 스킵가능): ');
+    if (!isValidNameForEdit(name)) throw new Error();
+
+    const price = await ask('가격(원) (Enter 스킵가능): ');
+    if (!isValidPriceForEdit(price)) throw new Error();
+
+    const quantity = await ask('수량 (Enter 스킵가능): ');
+    if (!isValidQuantityForEdit(quantity)) throw new Error();
+
+    const category = await ask('카테고리 (Enter 스킵가능): ');
+    if (!isValidCategoryForEdit(category)) throw new Error();
+
+    return {
+      name,
+      category,
+      price: +price,
+      quantity: +quantity,
     };
   }
 

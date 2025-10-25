@@ -3,22 +3,22 @@ function isNumeric(str) {
   return /^\d+$/.test(str);
 }
 
-export function validateId(id) {
+export function isValidIdForCreate(id) {
   return id !== '';
 }
 
-export function validName(name) {
+export function isValidNameForCreate(name) {
   return name !== '' && name.length <= 50;
 }
 
-export function validPrice(price) {
+export function isValidPriceForCreate(price) {
   return isNumeric(price) && +price >= 0;
 }
 
-export function validQuantity(quantity) {
+export function isValidQuantityForCreate(quantity) {
   return isNumeric(quantity) && +quantity >= 0;
 }
 
-export function validCategory(category) {
+export function isValidCategoryForCreate(category) {
   return category !== '';
 }
